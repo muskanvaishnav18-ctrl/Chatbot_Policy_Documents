@@ -5,17 +5,19 @@ import faiss
 import numpy as np
 
 # Function to extract text from a PDF file
+
 def extract_text_from_pdf(pdf_path):
-    # Open the PDF file
-    doc = fitz.open("/home/LabsKraft/Chatbot_Policy_Documents/data/Leave Policy.pdf.txt")
+    doc = fitz.open(pdf_path)
     text = ""
-    
-    # Extract text from each page
-    for page_num in range(doc.page_count):
-        page = doc.load_page(page_num)  # Load each page
-        text += page.get_text()  # Extract text from the page
-    
+    for page in doc:
+        text += page.get_text() + "\n"
+    doc.close()
     return text
+
+# Example usage:
+pdf_path = "/home/LabsKraft/Chatbot_Policy_Documents/data/Leave Policy.pdf"
+print(extract_text_from_pdf(pdf_path))
+
 
 # Function to clean the extracted text
 def clean_text(text):
